@@ -1,0 +1,97 @@
+
+openapi: 3.0.0
+info:
+  title: OpenAPI Assignment Exercise
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /customers:
+    parameters: []
+    get:
+      summary: returns a list of all customers
+      tags: []
+      responses:
+        '200':
+          description: returns a list of all customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        '404':
+          description: User Not Found
+      operationId: getAllCustomers
+      description: returns a list of all customers
+  '/customers/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: returns a specific customer
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+      operationId: getCustomerById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+    put:
+      summary: 'modifies a specific customer, returns only a status code 200'
+      tags: []
+      responses:
+        '200':
+          description: Customer modified successfully
+      operationId: modifyCustomerById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+    delete:
+      summary: 'deletes a specific customer, returns only a status code 200'
+      tags: []
+      responses:
+        '200':
+          description: Customer deleted successfully
+      operationId: deleteCustomerById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Customer:
+      title: Customer
+      type: object
+      properties:
+        id:
+          type: number
+          minimum: 0
+        companyName:
+          type: string
+        companyAddress:
+          type: string
+        contactPerson:
+          type: object
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+            role:
+              type: string
